@@ -11,6 +11,7 @@ PYPY_ARCH="linux64"
 # Translation
 cd "$BASE_DIR"/pypy/goal
 "$PYTHON" ../../rpython/bin/rpython --opt=jit
+PYTHONPATH=../.. ./pypy-c ../tool/build_cffi_imports.py
 
 # Packaging
 cd "$BASE_DIR"/pypy/tool/release
