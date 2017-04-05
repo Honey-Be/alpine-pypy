@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -ex
 
+CC=clang
+CXX=clang++
 BASE_DIR="/usr/src/pypy"
 PYTHON="$(which pypy || which python)"
 
