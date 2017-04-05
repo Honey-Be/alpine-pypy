@@ -20,6 +20,9 @@ RUN apk add --no-cache --virtual .build-deps \
         tk-dev \
         xz-dev \
         zlib-dev
+        
+ENV CC /usr/bin/clang
+ENV CXX /usr/bin/clang++
 
 # Download the source
 ENV PYPY_VERSION="5.7.0" \
