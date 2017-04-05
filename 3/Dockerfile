@@ -5,6 +5,7 @@ RUN apk add --no-cache --virtual .build-deps \
         bzip2-dev \
         expat-dev \
         clang \
+        clang-libs \
         gdbm-dev \
         libc-dev \
         libffi-dev \
