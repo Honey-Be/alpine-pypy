@@ -1,11 +1,15 @@
 FROM jamiehewland/alpine-pypy:2-5.6.0-slim
 
+
+RUN apk add --no-cache --update \
+        clang \
+        clang-libs
+
+
 # Add build dependencies
 RUN apk add --no-cache --virtual .build-deps \
         bzip2-dev \
         expat-dev \
-        clang \
-        clang-libs \
         gdbm-dev \
         libc-dev \
         libffi-dev \
