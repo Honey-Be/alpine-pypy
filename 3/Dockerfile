@@ -1,11 +1,10 @@
 FROM jamiehewland/alpine-pypy:2-5.6.0-slim
-LABEL maintainer "Jamie Hewland <jhewland@gmail.com>"
 
 # Add build dependencies
 RUN apk add --no-cache --virtual .build-deps \
         bzip2-dev \
         expat-dev \
-        gcc \
+        clang \
         gdbm-dev \
         libc-dev \
         libffi-dev \
