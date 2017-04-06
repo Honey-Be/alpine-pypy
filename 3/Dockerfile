@@ -1,17 +1,13 @@
-FROM jamiehewland/alpine-pypy:2-5.6.0-slim
+FROM honeybe/alpine-edge-python:latest
 
 
 ENV LIBRESSL_VERSION="2.4"
 
-RUN echo -e '@edge http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories \
-    && echo -e '@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
-    && echo -e '@community http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
-
 RUN apk add --no-cache --update \
-        libressl@edge \
-        libressl$LIBRESSL_VERSION-libssl@edge \
-        libressl$LIBRESSL_VERSION-libtls@edge \
-        libressl$LIBRESSL_VERSION-libcrypto@edge
+        libressl \
+        libressl$LIBRESSL_VERSION-libssl \
+        libressl$LIBRESSL_VERSION-libtls \
+        libressl$LIBRESSL_VERSION-libcrypto
 
 RUN apk add --no-cache --update \
         clang \
@@ -28,7 +24,7 @@ RUN apk add --no-cache --virtual .build-deps \
         linux-headers \
         make \
         ncurses-dev \
-        libressl-dev@edge \
+        libressl-dev \
         pax-utils \
         readline-dev \
         sqlite-dev \
