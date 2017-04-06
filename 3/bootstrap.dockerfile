@@ -1,18 +1,33 @@
 FROM python:2.7.13-alpine
-LABEL maintainer "Jamie Hewland <jhewland@gmail.com>"
+
+ENV LIBRESSL_VERSION="2.4"
+
+RUN echo -e '@edge http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories \
+    && echo -e '@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
+    && echo -e '@community http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+
+RUN apk add --no-cache --update \
+        libressl@edge \
+        libressl$LIBRESSL_VERSION-libssl@edge \
+        libressl$LIBRESSL_VERSION-libtls@edge \
+        libressl$LIBRESSL_VERSION-libcrypto@edge
+
+RUN apk add --no-cache --update \
+        clang \
+        clang-libs
+
 
 # Add build dependencies
 RUN apk add --no-cache --virtual .build-deps \
         bzip2-dev \
         expat-dev \
-        gcc \
         gdbm-dev \
         libc-dev \
         libffi-dev \
         linux-headers \
         make \
         ncurses-dev \
-        openssl-dev \
+        libressl-dev@edge \
         pax-utils \
         readline-dev \
         sqlite-dev \
@@ -21,6 +36,9 @@ RUN apk add --no-cache --virtual .build-deps \
         tk-dev \
         xz-dev \
         zlib-dev
+        
+ENV CC=clang
+ENV CXX=clang++
 
 # Download the source
 ENV PYPY_VERSION="5.7.0" \
@@ -40,7 +58,8 @@ WORKDIR /usr/src/pypy
 COPY patches /patches
 RUN for patch in /patches/*.patch; do patch -p0 -E -i "$patch"; done
 
-COPY ./build.sh /build.sh
+COPY build.sh /build.sh
 CMD ["/build.sh"]
+
 
 VOLUME /tmp
