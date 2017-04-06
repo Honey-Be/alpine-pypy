@@ -1,4 +1,4 @@
-FROM python:2.7.13-alpine
+FROM honeybe/alpine-edge-python:latest
 
 ENV LIBRESSL_VERSION="2.4"
 
