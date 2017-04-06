@@ -1,6 +1,18 @@
 FROM jamiehewland/alpine-pypy:2-5.6.0-slim
 
 
+ENV LIBRESSL_VERSION="2.4"
+
+RUN echo -e '@edge http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories \
+    && echo -e '@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
+    && echo -e '@community http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+
+RUN apk add --no-cache --update \
+        libressl@edge \
+        libressl$LIBRESSL_VERSION-libssl@edge \
+        libressl$LIBRESSL_VERSION-libtls@edge \
+        libressl$LIBRESSL_VERSION-libcrypto@edge
+
 RUN apk add --no-cache --update \
         clang \
         clang-libs
@@ -16,7 +28,7 @@ RUN apk add --no-cache --virtual .build-deps \
         linux-headers \
         make \
         ncurses-dev \
-        openssl-dev \
+        libressl-dev@edge \
         pax-utils \
         readline-dev \
         sqlite-dev \
@@ -26,8 +38,8 @@ RUN apk add --no-cache --virtual .build-deps \
         xz-dev \
         zlib-dev
         
-ENV CC /usr/bin/clang
-ENV CXX /usr/bin/clang++
+ENV CC=clang
+ENV CXX=clang++
 
 # Download the source
 ENV PYPY_VERSION="5.7.0" \
