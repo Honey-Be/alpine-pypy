@@ -12,7 +12,7 @@ PYPY_ARCH="linux64"
 
 # Translation
 cd "$BASE_DIR"/pypy/goal
-"$PYTHON" ../../rpython/bin/rpython --opt=jit
+"$PYTHON" ../../rpython/bin/rpython --opt=jit -cc=clang –translation-jit_profiler=oprofile
 PYTHONPATH=../.. ./pypy-c ../tool/build_cffi_imports.py
 
 # Packaging
